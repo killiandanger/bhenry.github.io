@@ -1,0 +1,10 @@
+body {
+  font-family: tahoma;
+}
+
+.game {
+  margin: 0 auto;
+  width: 280px;
+  height: 280px;
+  border: 2px solid #000;
+}
