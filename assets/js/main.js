@@ -14,25 +14,10 @@ game.flipCard = function(c) {
   icon.className = 'fas fa-sync';
   icon.title = 'Flip this card';
   icon.onclick = function() {
-    c.facing = c.facing == 'down' ? 'up' : 'down';
+    c.facing_up = !c.facing_up;
     c.render();
   }
   return icon;
-}
-
-game.card = function(c) {
-  let div = document.createElement('div');
-  let inner = "";
-  div.className = 'card'
-  if (c.facing == 'up') {
-    inner = `<div class='cardfront'><div class='rank'>${c.rank}</div><div class='suit'>${c.suit}</div></div>`;
-  } else {
-    inner = "<div class='cardback'></div>";
-  }
-  div.innerHTML = inner;
-  div.append(game.takeCard(c));
-  div.append(game.flipCard(c));
-  return div;
 }
 
 game.pile = function(cs, coords) {
@@ -42,6 +27,7 @@ game.pile = function(cs, coords) {
   p.render = function() {
     p.div.innerHTML = "";
     p.div.append(cs[0].div);
+    cs[0].render();
   }
   return p;
 }
@@ -81,12 +67,24 @@ game.ranks.forEach(function(r) {
     let card = {};
     card.rank = r;
     card.suit = s;
-    card.facing = 'down';
-    card.div = game.card(card);
+    card.facing_up = false;
+    card.div = document.createElement('div');
+    card.div = document.createElement('div');
     card.render = function() {
-      card.div.innerHTML = "";
-      card.div.append(game.card(card));
+      card.div.innerHTML = '';
+      let inner = '';
+      if (card.facing_up) {
+        card.div.className = 'card'
+        inner = `<div class='rank'>${card.rank}</div><div class='suit'>${card.suit}</div>`;
+      } else {
+        card.div.className = 'card cardback'
+        inner = `<div class='rank'>&nbsp;</div><div class='suit'>&nbsp;</div>`;
+      }
+      card.div.innerHTML = inner;
+      card.div.append(game.takeCard(card));
+      card.div.append(game.flipCard(card));
     }
+    $(card.div).draggable({containment: $(game.board)});
     game.deck.push(card);
   })
 })
