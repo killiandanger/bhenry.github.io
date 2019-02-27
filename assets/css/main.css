@@ -2,10 +2,18 @@ body {
   font-family: tahoma;
 }
 
-.game {
+#game {
   margin: 0 auto;
   width: auto;
   height: auto;
   min-height: 400px;
   border: 2px solid #000;
+}
+
+.card {
+  margin: 2px;
+  width: 28px;
+  height: 38px;
+  border: 1px solid #444;
+  cursor: pointer;
 }
