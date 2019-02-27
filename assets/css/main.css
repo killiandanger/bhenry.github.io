@@ -10,6 +10,10 @@ body {
   border: 2px solid #000;
 }
 
+.red {
+  color: red;
+}
+
 .card {
   margin: 0;
   width: 48px;

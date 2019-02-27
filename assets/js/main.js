@@ -1,21 +1,26 @@
 let game = {};
 
-game.board = document.getElementById('game')
+game.board = document.getElementById('game');
+game.cardsInHand = [];
 
-game.takeCard = function(c) {
+game.takeCard = function(p) {
   let icon = document.createElement('i');
   icon.className = 'far fa-hand-lizard';
   icon.title = 'Draw this card';
+  // icon.onclick = function() {
+
+  // }
   return icon;
 }
 
-game.flipCard = function(c) {
+game.flipCard = function(p) {
   let icon = document.createElement('i');
   icon.className = 'fas fa-sync';
   icon.title = 'Flip this card';
   icon.onclick = function() {
+    let c = p.cards[0];
     c.facing_up = !c.facing_up;
-    c.render();
+    p.render();
   }
   return icon;
 }
@@ -24,20 +29,29 @@ game.pile = function(cs, coords) {
   let p = {};
   p.location = coords;
   p.div = document.createElement('div');
+  p.cards = cs;
   p.render = function() {
     p.div.innerHTML = "";
     p.div.append(cs[0].div);
     cs[0].render();
+    cs[0].div.append(game.takeCard(p));
+    cs[0].div.append(game.flipCard(p));
   }
   return p;
 }
 
-game.start = function() {
-  game.deck = game.shuffle(game.deck);
-  game.board.innerHTML = "";
-  let deck = game.pile(game.deck, [0,0]);
-  game.board.append(deck.div);
-  deck.render();
+game.hand = function(coords) {
+  let h = {};
+  h.location = coords;
+  h.div = document.createElement('div');
+  h.render = function() {
+    h.div.innerHTML = '';
+    game.cardsInHand.forEach(function(c) {
+      h.div.append(c.div);
+      c.facing_up = true;
+      c.render();
+    })
+  }
 }
 
 game.shuffle = function(array) {
@@ -59,7 +73,7 @@ game.shuffle = function(array) {
   return array;
 }
 
-game.suits = ['♥', '♣', '♦', '♠']
+game.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠']
 game.ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 game.deck = []
 game.ranks.forEach(function(r) {
@@ -68,7 +82,6 @@ game.ranks.forEach(function(r) {
     card.rank = r;
     card.suit = s;
     card.facing_up = false;
-    card.div = document.createElement('div');
     card.div = document.createElement('div');
     card.render = function() {
       card.div.innerHTML = '';
@@ -81,12 +94,19 @@ game.ranks.forEach(function(r) {
         inner = `<div class='rank'>&nbsp;</div><div class='suit'>&nbsp;</div>`;
       }
       card.div.innerHTML = inner;
-      card.div.append(game.takeCard(card));
-      card.div.append(game.flipCard(card));
     }
     $(card.div).draggable({containment: $(game.board)});
     game.deck.push(card);
   })
 })
+
+game.start = function() {
+  game.deck = game.shuffle(game.deck);
+  game.board.innerHTML = "";
+  let deck = game.pile(game.deck, [0,0]);
+  game.board.append(deck.div);
+  //game.board.append(game.hand.div);
+  deck.render();
+}
 
 game.start();
