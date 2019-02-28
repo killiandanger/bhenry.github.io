@@ -7,9 +7,12 @@ game.takeCard = function(p) {
   let icon = document.createElement('i');
   icon.className = 'far fa-hand-lizard';
   icon.title = 'Draw this card';
-  // icon.onclick = function() {
-
-  // }
+  icon.onclick = function() {
+    let c = p.cards.shift();
+    game.cardsInHand.push(c);
+    p.render();
+    game.hand.render();
+  }
   return icon;
 }
 
@@ -32,26 +35,26 @@ game.pile = function(cs, coords) {
   p.cards = cs;
   p.render = function() {
     p.div.innerHTML = "";
-    p.div.append(cs[0].div);
-    cs[0].render();
-    cs[0].div.append(game.takeCard(p));
-    cs[0].div.append(game.flipCard(p));
+    if (p.cards.length > 0) {
+      p.div.append(p.cards[0].div);
+      p.cards[0].render();
+      p.cards[0].div.append(game.takeCard(p));
+      p.cards[0].div.append(game.flipCard(p));
+    }
   }
   return p;
 }
 
-game.hand = function(coords) {
-  let h = {};
-  h.location = coords;
-  h.div = document.createElement('div');
-  h.render = function() {
-    h.div.innerHTML = '';
-    game.cardsInHand.forEach(function(c) {
-      h.div.append(c.div);
-      c.facing_up = true;
-      c.render();
-    })
-  }
+game.hand = {}
+game.hand.div = document.createElement('div');
+game.hand.div.className = 'hand';
+game.hand.render = function() {
+  game.hand.div.innerHTML = '';
+  game.cardsInHand.forEach(function(c) {
+    game.hand.div.append(c.div);
+    c.facing_up = true;
+    c.render();
+  })
 }
 
 game.shuffle = function(array) {
@@ -95,7 +98,7 @@ game.ranks.forEach(function(r) {
       }
       card.div.innerHTML = inner;
     }
-    $(card.div).draggable({containment: $(game.board)});
+
     game.deck.push(card);
   })
 })
@@ -105,7 +108,8 @@ game.start = function() {
   game.board.innerHTML = "";
   let deck = game.pile(game.deck, [0,0]);
   game.board.append(deck.div);
-  //game.board.append(game.hand.div);
+  game.board.parentNode.insertBefore(game.hand.div, game.board.nextSibling);
+  game.hand.render();
   deck.render();
 }
 

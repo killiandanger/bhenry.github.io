@@ -23,6 +23,12 @@ body {
   text-align: center;
   border: 1px solid #000;
   vertical-align: text-bottom;
+  opacity: 1;
+  background-color: #eee;
+}
+
+.hand .card {
+  float: left;
 }
 
 .cardback {
