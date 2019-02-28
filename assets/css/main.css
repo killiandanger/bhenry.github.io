@@ -73,7 +73,7 @@ i {
 }
 
 .giant {
-  font-size: 4em;
+  font-size: 3em;
 }
 
 .flair * {
@@ -83,6 +83,7 @@ i {
 }
 
 .flair {
-  margin: 33px 1px;
+  text-align: center;
+  margin: 24px 1px;
   vertical-align: center;
 }
