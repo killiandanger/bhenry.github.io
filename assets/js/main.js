@@ -14,14 +14,16 @@ game.takeCard = function(p) {
   icon.title = 'Draw this card';
   icon.onclick = function() {
     let c = p.cards.shift();
+    c.facing_up = true;
     game.cardsInHand.push(c);
+    c.whereami = 'hand';
     p.render();
     game.hand.render();
   }
   return icon;
 }
 
-game.flipCard = function(p) {
+game.flipPile = function(p) {
   let icon = game.clickable('fas fa-sync');
   icon.title = 'Flip this card';
   icon.onclick = function() {
@@ -32,22 +34,50 @@ game.flipCard = function(p) {
   return icon;
 }
 
+game.flipCard = function(c) {
+  let icon = game.clickable('fas fa-sync');
+  icon.title = 'Flip this card';
+  icon.onclick = function() {
+    c.facing_up = !c.facing_up;
+    c.render();
+  }
+  return icon;
+}
+
 game.pile = function(cs, coords) {
   let p = {};
+  p.cards = cs;
   p.location = coords;
   p.div = document.createElement('div');
-  $(p.div).draggable({containment: $(game.board)});
-  p.cards = cs;
+  $(p.div).draggable();
   p.render = function() {
     p.div.innerHTML = "";
     if (p.cards.length > 0) {
-      p.div.append(p.cards[0].div);
-      p.cards[0].render();
-      p.cards[0].div.append(game.takeCard(p));
-      p.cards[0].div.append(game.flipCard(p));
+      let c = p.cards[0];
+      c.render();
+      c.div.append(game.deckClickables(p))
+      p.div.append(c.div);
     }
   }
   return p;
+}
+
+game.handClickables = function(c) {
+  let flip = game.flipCard(c);
+  let d = document.createElement('div');
+  d.className = 'clickables';
+  d.append(flip);
+  return d;
+}
+
+game.deckClickables = function(p) {
+  let draw = game.takeCard(p);
+  let flip = game.flipPile(p);
+  let d = document.createElement('div');
+  d.className = 'clickables';
+  d.append(draw);
+  d.append(flip);
+  return d;
 }
 
 game.hand = {}
@@ -57,9 +87,7 @@ game.hand.render = function() {
   game.hand.div.innerHTML = '';
   game.cardsInHand.forEach(function(c) {
     game.hand.div.append(c.div);
-    c.facing_up = true;
     c.render();
-
   })
 }
 
@@ -84,12 +112,13 @@ game.shuffle = function(array) {
 
 game.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠']
 game.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K']
-game.deck = []
+game.cards = []
 game.ranks.forEach(function(r) {
   game.suits.forEach(function(s) {
     let card = {};
     card.rank = r;
     card.suit = s;
+    card.whereami = 'deck';
     card.facing_up = false;
     card.div = document.createElement('div');
     card.render = function() {
@@ -103,20 +132,23 @@ game.ranks.forEach(function(r) {
         inner = `<div class='rank'>&nbsp;</div><div class='suit'>&nbsp;</div>`;
       }
       card.div.innerHTML = inner;
+      if (card.whereami == 'hand') {
+        card.div.append(game.handClickables(card));
+      }
     }
 
-    game.deck.push(card);
+    game.cards.push(card);
   })
 })
 
 game.start = function() {
-  game.deck = game.shuffle(game.deck);
+  game.cards = game.shuffle(game.cards);
   game.board.innerHTML = "";
-  let deck = game.pile(game.deck, [0,0]);
-  game.board.append(deck.div);
+  game.deck = game.pile(game.cards, [0,0]);
+  game.board.append(game.deck.div);
   game.board.parentNode.insertBefore(game.hand.div, game.board.nextSibling);
   game.hand.render();
-  deck.render();
+  game.deck.render();
 }
 
 game.start();

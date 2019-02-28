@@ -19,7 +19,7 @@ body {
   width: auto;
   height: auto;
   min-height: 400px;
-  border: 2px solid #000;
+  background-color: #09752f;
 }
 
 .red {
@@ -43,10 +43,10 @@ body {
   float: left;
 }
 
-.hand .card > .clickables {
+.card > .clickables {
   visibility: hidden;
 }
-.hand .card:hover > .clickables {
+.card:hover > .clickables {
   visibility: visible;
 }
 
