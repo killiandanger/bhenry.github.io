@@ -31,6 +31,13 @@ body {
   float: left;
 }
 
+.hand .card > .clickables {
+  visibility: hidden;
+}
+.hand .card:hover > .clickables {
+  visibility: visible;
+}
+
 .cardback {
   background-image: url(../img/cardback.png);
   background-size: 48px;
@@ -39,4 +46,43 @@ body {
 
 i {
   margin: 4px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.giant {
+  font-size: 4em;
+}
+
+.flair * {
+  margin:0 4px;
+  padding:0;
+  vertical-align: top;
+}
+
+.flair {
+  margin: 33px 1px;
+  vertical-align: center;
 }

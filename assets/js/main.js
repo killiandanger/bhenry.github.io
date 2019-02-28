@@ -3,9 +3,14 @@ let game = {};
 game.board = document.getElementById('game');
 game.cardsInHand = [];
 
-game.takeCard = function(p) {
+game.clickable = function(iconClass) {
   let icon = document.createElement('i');
-  icon.className = 'far fa-hand-lizard';
+  icon.className = iconClass;
+  return icon;
+}
+
+game.takeCard = function(p) {
+  let icon = game.clickable('far fa-hand-lizard');
   icon.title = 'Draw this card';
   icon.onclick = function() {
     let c = p.cards.shift();
@@ -17,8 +22,7 @@ game.takeCard = function(p) {
 }
 
 game.flipCard = function(p) {
-  let icon = document.createElement('i');
-  icon.className = 'fas fa-sync';
+  let icon = game.clickable('fas fa-sync');
   icon.title = 'Flip this card';
   icon.onclick = function() {
     let c = p.cards[0];
@@ -32,6 +36,7 @@ game.pile = function(cs, coords) {
   let p = {};
   p.location = coords;
   p.div = document.createElement('div');
+  $(p.div).draggable({containment: $(game.board)});
   p.cards = cs;
   p.render = function() {
     p.div.innerHTML = "";
@@ -54,6 +59,7 @@ game.hand.render = function() {
     game.hand.div.append(c.div);
     c.facing_up = true;
     c.render();
+
   })
 }
 
@@ -77,7 +83,7 @@ game.shuffle = function(array) {
 }
 
 game.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠']
-game.ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+game.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K']
 game.deck = []
 game.ranks.forEach(function(r) {
   game.suits.forEach(function(s) {
