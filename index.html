@@ -41,6 +41,12 @@
   };
   firebase.initializeApp(config);
 </script>
+<script type="text/javascript">
+	const canHover = !(matchMedia('(hover: none)').matches);
+  if(canHover) {
+  document.body.classList.add('can-hover');
+}
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
