@@ -22,6 +22,15 @@ game.takeCard = function(p) {
   return icon;
 }
 
+game.dropCard = function(p) {
+  let icon = game.clickable('fas fa-bullseye');
+  icon.title = 'Place card here';
+  icon.onclick = function() {
+    game.hand.playCard(p);
+  }
+  return icon;
+}
+
 game.selectCard = function(h, c) {
   let icon = game.clickable('far fa-hand-lizard');
   icon.title = 'Play this card';
@@ -32,7 +41,9 @@ game.selectCard = function(h, c) {
       }
     });
     c.chosen = true;
+    game.selectedCard = c;
     h.render();
+    game.deck.render();
     //click handler on board to start a pile
     //click handler on piles to add card to pile
     //click handler on other cards in hand
@@ -92,25 +103,30 @@ game.pile = function(cs, coords) {
 
 game.handClickables = function(h, c) {
   let cancel = game.cancelCardSelection(h, c);
-  let play = game.selectCard(h, c);
+  let select = game.selectCard(h, c);
   let flip = game.flipCard(h, c);
   let d = document.createElement('div');
   d.className = 'clickables';
   if (c.chosen) {
     d.append(cancel);
   } else {
-    d.append(play);
+    d.append(select);
   }
   d.append(flip);
   return d;
 }
 
 game.deckClickables = function(p) {
+  let drop = game.dropCard(p);
   let draw = game.takeCard(p);
   let flip = game.flipPile(p);
   let d = document.createElement('div');
   d.className = 'clickables';
-  d.append(draw);
+  if (game.selectedCard) {
+    d.append(drop);
+  } else {
+    d.append(draw);
+  }
   d.append(flip);
   return d;
 }
@@ -126,15 +142,20 @@ game.hand.render = function() {
     c.div.append(game.handClickables(game.hand, c));
   });
 }
-game.hand.playCard = function(card) {
+game.hand.playCard = function(pile) {
   let holder = [];
   game.cardsInHand.forEach(function(c) {
-    if (! (c.rank == card.rank && c.suit == card.suit) ) {
+    if ( !c.chosen ) {
       holder.push(c);
+    } else {
+      c.chosen = false;
+      pile.cards.unshift(c);
     }
   });
+  game.selectedCard = null;
   game.cardsInHand = holder;
   game.hand.render();
+  pile.render();
 }
 
 game.shuffle = function(array) {
