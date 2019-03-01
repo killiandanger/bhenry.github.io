@@ -10,6 +10,20 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 	<link href="assets/css/main.css" rel="stylesheet">
 
+	<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyBd8fuYjowHrpbHKh0UPHK5czwZkJXj-7g",
+	    authDomain: "dracelbat.firebaseapp.com",
+	    databaseURL: "https://dracelbat.firebaseio.com",
+	    projectId: "dracelbat",
+	    storageBucket: "dracelbat.appspot.com",
+	    messagingSenderId: "973405874098"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -19,6 +33,7 @@
 	<![endif]-->
 </head>
 <body>
+
 <div class="container">
 	<div class="flair">
 		<a href="https://stackoverflow.com/users/112620/brandon-henry"><img src="https://stackoverflow.com/users/flair/112620.png" width="180" height="50" alt="Brandon Henry at Stack Overflow" title="Brandon Henry at Stack Overflow"></a>
@@ -28,26 +43,15 @@
 	</div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBzucuFUresASohBFMdq6fzO9Oqc2PTU8s",
-    authDomain: "dracelbat-0306.firebaseapp.com",
-    databaseURL: "https://dracelbat-0306.firebaseio.com",
-    projectId: "dracelbat-0306",
-    storageBucket: "",
-    messagingSenderId: "542208376338"
-  };
-  firebase.initializeApp(config);
-</script>
 <script type="text/javascript">
 	const canHover = !(matchMedia('(hover: none)').matches);
   if(canHover) {
-  document.body.classList.add('can-hover');
-}
+    document.body.classList.add('can-hover');
+  }
 </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 <script src="assets/js/main.js"></script>
 </body>
 </html>
