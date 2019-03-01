@@ -22,17 +22,26 @@ game.takeCard = function(p) {
   return icon;
 }
 
-game.playCard = function(h, c) {
+game.selectCard = function(h, c) {
   let icon = game.clickable('far fa-hand-lizard');
   icon.title = 'Play this card';
   icon.onclick = function() {
-    //c.div.parentNode.removeChild(c.div);
-    //change state of card
-    //hover card near cursor
+    c.chosen = true;
+    h.render();
     //click handler on board to start a pile
     //click handler on piles to add card to pile
-    //c.render();
+    //click handler on other cards in hand
+  }
+  return icon;
+}
 
+game.cancelCardSelection = function(h, c) {
+  let icon = game.clickable('fas fa-undo');
+  icon.title = 'Cancel playing this card';
+  icon.onclick = function() {
+    c.chosen = false;
+    h.render();
+    //cleanup click handlers
   }
   return icon;
 }
@@ -77,11 +86,16 @@ game.pile = function(cs, coords) {
 }
 
 game.handClickables = function(h, c) {
-  let play = game.playCard(h, c);
+  let cancel = game.cancelCardSelection(h, c);
+  let play = game.selectCard(h, c);
   let flip = game.flipCard(h, c);
   let d = document.createElement('div');
   d.className = 'clickables';
-  d.append(play);
+  if (c.chosen) {
+    d.append(cancel);
+  } else {
+    d.append(play);
+  }
   d.append(flip);
   return d;
 }
@@ -106,6 +120,16 @@ game.hand.render = function() {
     c.render();
     c.div.append(game.handClickables(game.hand, c));
   })
+}
+game.hand.playCard = function(card) {
+  let holder = [];
+  game.cardsInHand.forEach(function(c) {
+    if (! (c.rank == card.rank && c.suit == card.suit) ) {
+      holder.push(c);
+    }
+  })
+  game.cardsInHand = holder;
+  game.hand.render();
 }
 
 game.shuffle = function(array) {
@@ -140,13 +164,17 @@ game.ranks.forEach(function(r) {
     card.render = function() {
       card.div.innerHTML = '';
       let inner = '';
+      let classes = 'card';
       if (card.facing_up) {
-        card.div.className = 'card'
         inner = `<div class='rank'>${card.rank}</div><div class='suit'>${card.suit}</div>`;
       } else {
-        card.div.className = 'card cardback'
+        classes += ' cardback'
         inner = `<div class='rank'>&nbsp;</div><div class='suit'>&nbsp;</div>`;
       }
+      if (card.chosen) {
+        classes += ' chosen'
+      }
+      card.div.className = classes;
       card.div.innerHTML = inner;
     }
 

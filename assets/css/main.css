@@ -39,6 +39,10 @@ body {
   background-color: #eee;
 }
 
+.hand {
+  min-height: 100px;
+}
+
 .hand .card {
   float: left;
 }
@@ -48,6 +52,10 @@ body {
 }
 .card:hover > .clickables {
   visibility: visible;
+}
+
+.chosen {
+  border: 4px solid #00f;
 }
 
 .cardback {
