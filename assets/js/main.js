@@ -16,9 +16,23 @@ game.takeCard = function(p) {
     let c = p.cards.shift();
     c.facing_up = true;
     game.cardsInHand.push(c);
-    c.whereami = 'hand';
     p.render();
     game.hand.render();
+  }
+  return icon;
+}
+
+game.playCard = function(h, c) {
+  let icon = game.clickable('far fa-hand-lizard');
+  icon.title = 'Play this card';
+  icon.onclick = function() {
+    //c.div.parentNode.removeChild(c.div);
+    //change state of card
+    //hover card near cursor
+    //click handler on board to start a pile
+    //click handler on piles to add card to pile
+    //c.render();
+
   }
   return icon;
 }
@@ -34,12 +48,12 @@ game.flipPile = function(p) {
   return icon;
 }
 
-game.flipCard = function(c) {
+game.flipCard = function(h, c) {
   let icon = game.clickable('fas fa-sync');
   icon.title = 'Flip this card';
   icon.onclick = function() {
     c.facing_up = !c.facing_up;
-    c.render();
+    h.render();
   }
   return icon;
 }
@@ -62,10 +76,12 @@ game.pile = function(cs, coords) {
   return p;
 }
 
-game.handClickables = function(c) {
-  let flip = game.flipCard(c);
+game.handClickables = function(h, c) {
+  let play = game.playCard(h, c);
+  let flip = game.flipCard(h, c);
   let d = document.createElement('div');
   d.className = 'clickables';
+  d.append(play);
   d.append(flip);
   return d;
 }
@@ -88,6 +104,7 @@ game.hand.render = function() {
   game.cardsInHand.forEach(function(c) {
     game.hand.div.append(c.div);
     c.render();
+    c.div.append(game.handClickables(game.hand, c));
   })
 }
 
@@ -118,7 +135,6 @@ game.ranks.forEach(function(r) {
     let card = {};
     card.rank = r;
     card.suit = s;
-    card.whereami = 'deck';
     card.facing_up = false;
     card.div = document.createElement('div');
     card.render = function() {
@@ -132,9 +148,6 @@ game.ranks.forEach(function(r) {
         inner = `<div class='rank'>&nbsp;</div><div class='suit'>&nbsp;</div>`;
       }
       card.div.innerHTML = inner;
-      if (card.whereami == 'hand') {
-        card.div.append(game.handClickables(card));
-      }
     }
 
     game.cards.push(card);
