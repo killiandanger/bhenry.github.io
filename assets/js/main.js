@@ -124,7 +124,7 @@ game.hand.render = function() {
     game.hand.div.append(c.div);
     c.render();
     c.div.append(game.handClickables(game.hand, c));
-  })
+  });
 }
 game.hand.playCard = function(card) {
   let holder = [];
@@ -132,7 +132,7 @@ game.hand.playCard = function(card) {
     if (! (c.rank == card.rank && c.suit == card.suit) ) {
       holder.push(c);
     }
-  })
+  });
   game.cardsInHand = holder;
   game.hand.render();
 }
@@ -184,8 +184,8 @@ game.ranks.forEach(function(r) {
     }
 
     game.cards.push(card);
-  })
-})
+  });
+});
 
 game.start = function() {
   game.cards = game.shuffle(game.cards);
