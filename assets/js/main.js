@@ -14,7 +14,6 @@ game.takeCard = function(p) {
   icon.title = 'Draw this card';
   icon.onclick = function() {
     let c = p.cards.shift();
-    c.facing_up = true;
     game.cardsInHand.push(c);
     p.render();
     game.hand.render();
