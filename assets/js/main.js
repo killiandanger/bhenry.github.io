@@ -87,7 +87,12 @@ game.pile = function(cs, coords) {
   p.cards = cs;
   p.location = coords;
   p.div = document.createElement('div');
-  $(p.div).draggable();
+  $(p.div).draggable({
+    cancel: "div.clickables",
+    stop: function(e, ui) {
+      p.location = [ui.position.top, ui.position.left];
+    }
+  });
   p.render = function() {
     p.div.innerHTML = "";
     p.div.style.top = `${p.location[0]}px`;
