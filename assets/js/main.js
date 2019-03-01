@@ -90,6 +90,8 @@ game.pile = function(cs, coords) {
   $(p.div).draggable();
   p.render = function() {
     p.div.innerHTML = "";
+    p.div.style.top = `${p.location[0]}px`;
+    p.div.style.left = `${p.location[1]}px`;
     if (p.cards.length > 0) {
       let c = p.cards[0];
       c.render();
@@ -210,7 +212,7 @@ game.ranks.forEach(function(r) {
 game.start = function() {
   game.cards = game.shuffle(game.cards);
   game.board.innerHTML = "";
-  game.deck = game.pile(game.cards, [0,0]);
+  game.deck = game.pile(game.cards, [100,100]);
   game.board.append(game.deck.div);
   game.board.parentNode.insertBefore(game.hand.div, game.board.nextSibling);
   game.hand.render();
