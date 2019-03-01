@@ -26,6 +26,11 @@ game.selectCard = function(h, c) {
   let icon = game.clickable('far fa-hand-lizard');
   icon.title = 'Play this card';
   icon.onclick = function() {
+    game.cardsInHand.forEach(function(c) {
+      if (c.chosen == true) {
+        c.chosen = false;
+      }
+    });
     c.chosen = true;
     h.render();
     //click handler on board to start a pile
