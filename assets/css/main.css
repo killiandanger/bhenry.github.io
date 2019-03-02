@@ -17,9 +17,14 @@ body {
 #game {
   margin: 0 auto;
   width: auto;
-  height: auto;
   min-height: 400px;
+  max-width: 90%;
   background-color: #09752f;
+}
+
+.pile {
+  width: 70px;
+  margin: 1px;
 }
 
 .red {
@@ -40,7 +45,10 @@ body {
 }
 
 .hand {
+  margin: 0 auto;
+  width: auto;
   min-height: 100px;
+  max-width: 90%;
 }
 
 .hand .card {

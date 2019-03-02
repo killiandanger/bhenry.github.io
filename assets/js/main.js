@@ -44,7 +44,6 @@ game.selectCard = function(h, c) {
     h.render();
     game.deck.render();
     //click handler on board to start a pile
-    //click handler on piles to add card to pile
     //click handler on other cards in hand
   }
   return icon;
@@ -55,8 +54,9 @@ game.cancelCardSelection = function(h, c) {
   icon.title = 'Cancel playing this card';
   icon.onclick = function() {
     c.chosen = false;
+    game.selectedCard = null;
     h.render();
-    //cleanup click handlers
+    game.deck.render();
   }
   return icon;
 }
@@ -87,6 +87,7 @@ game.pile = function(cs, coords) {
   p.cards = cs;
   p.location = coords;
   p.div = document.createElement('div');
+  p.div.className = 'pile';
   p.render = function() {
     p.div.innerHTML = "";
     p.div.style.top = `${p.location[0]}px`;
