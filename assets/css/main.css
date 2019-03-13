@@ -27,7 +27,7 @@ body {
 #game {
   margin: 0 auto;
   text-align: center;
-  max-width:940px;
+  max-width:980px;
 }
 
 #game * {
@@ -44,33 +44,35 @@ body {
   min-height: 100px;
 }
 
-.pile {
-  width: 70px;
-  margin: 1px;
-}
-
 .red {
   color: red;
 }
 
 .card {
-  display: inline-block;
-  margin: 1px;
+  margin: 2px;
   width: 69px;
   height: 100px;
   cursor: pointer;
   font-size: 1.4em;
   text-align: center;
-  border: 1px solid #000;
+  border-width: 1px;
+  border-color: #000;
+  border-style: solid;
   vertical-align: text-bottom;
   opacity: 1;
   background-color: #eee;
+  position: relative;
 }
 
 .cardback {
   background-image: url(../img/cardback.png);
   background-size: 67px;
   background-repeat: no-repeat;
+}
+
+.pile {
+  border-style: solid solid double solid;
+  border-width: 1px 5px 4px 1px;
 }
 
 i {

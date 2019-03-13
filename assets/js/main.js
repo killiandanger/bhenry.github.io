@@ -6,6 +6,19 @@ game.hand = document.getElementById('hand');
 game.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠'];
 game.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
 
+game.startPile = function(cards, coords) {
+  let p = {};
+  p.cards = cards;
+  p.location = coords;
+  let c = p.cards[0];
+  c.div.style.top = `${p.location[0]}px`;
+  c.div.style.left = `${p.location[1]}px`;
+  c.render();
+  c.div.classList.add("pile");
+  game.board.append(c.div);
+  return p;
+};
+
 game.cards = []
 game.suits.forEach(function(s, si) {
   game.ranks.forEach(function(r, ri) {
@@ -23,18 +36,18 @@ game.suits.forEach(function(s, si) {
       if (card.facing_up) {
         inner = `<div class='rank'>${card.rank}</div><div class='suit'>${card.suit}</div>`;
       } else {
-        classes += ' cardback'
+        classes += ' cardback';
         inner = `<div class='rank'>&nbsp;</div><div class='suit'>&nbsp;</div>`;
       }
+
       card.div.className = classes;
       card.div.innerHTML = inner;
     }
 
-    game.cards.push(card);
+    game.cards.unshift(card);
   });
 });
 
-util.shuffle(game.cards).forEach(function(c){
-  c.render();
-  game.board.append(c.div);
-});
+util.shuffle(game.cards);
+game.startPile(game.cards, [100,100]);
+
