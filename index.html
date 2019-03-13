@@ -50,10 +50,6 @@
 		});
 	</script>
 
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery-ui.js"></script>
-	<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-
 	<!--[if lt IE 9]>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -63,21 +59,16 @@
 
 <div class="container">
 	<div class="flair">
-		<a href="https://stackoverflow.com/users/112620/brandon-henry"><img src="https://stackoverflow.com/users/flair/112620.png" width="180" height="50" alt="Brandon Henry at Stack Overflow" title="Brandon Henry at Stack Overflow"></a>
-		<a class='giant' href='https://github.com/bhenry' title="bhenry at github"><i class="fab fa-git-square"></i></a>
+		<a href="https://stackoverflow.com/users/112620/brandon-henry"><img src="https://stackoverflow.com/users/flair/112620.png" width="180" height="50" alt="Brandon Henry on Stack Overflow" title="Brandon Henry on Stack Overflow"></a>
+		<a class='giant' href='https://github.com/bhenry' title="bhenry on github"><i class="fab fa-git-square"></i></a>
 	</div>
-	<div id="game">
+	<div id="game" class="noselect">
+		<div id="board">
+		</div>
+		<div id="hand">
+		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	const canHover = !(matchMedia('(hover: none)').matches);
-  if(canHover) {
-    document.body.classList.add('can-hover');
-  }
-</script>
-
-<script src="assets/js/bootstrap.min.js"></script>
 
 <script src="assets/js/main.js"></script>
 </body>
