@@ -66,13 +66,13 @@ body {
 
 .cardback {
   background-image: url(../img/cardback.png);
-  background-size: 67px;
+  background-size: 69px;
   background-repeat: no-repeat;
 }
 
 .pile {
   border-style: solid solid double solid;
-  border-width: 1px 5px 4px 1px;
+  border-width: 1px 4px 3px 1px;
 }
 
 i {

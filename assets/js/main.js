@@ -15,7 +15,9 @@ game.pile = function(cards, coords) {
     c.div.style.top = `${p.location[0]}px`;
     c.div.style.left = `${p.location[1]}px`;
     c.render();
-    c.div.classList.add("pile");
+    if (p.cards.length > 1){
+      c.div.classList.add("pile");
+    }
     game.board.append(c.div);
   }
   return p;
