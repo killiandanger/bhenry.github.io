@@ -34,7 +34,7 @@ game.suits.forEach(function(s, si) {
   });
 });
 
-game.cards.forEach(function(c){
+util.shuffle(game.cards).forEach(function(c){
   c.render();
   game.board.append(c.div);
 });
