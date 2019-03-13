@@ -6,16 +6,18 @@ game.hand = document.getElementById('hand');
 game.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠'];
 game.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
 
-game.startPile = function(cards, coords) {
+game.pile = function(cards, coords) {
   let p = {};
   p.cards = cards;
   p.location = coords;
-  let c = p.cards[0];
-  c.div.style.top = `${p.location[0]}px`;
-  c.div.style.left = `${p.location[1]}px`;
-  c.render();
-  c.div.classList.add("pile");
-  game.board.append(c.div);
+  p.render = function() {
+    let c = p.cards[0];
+    c.div.style.top = `${p.location[0]}px`;
+    c.div.style.left = `${p.location[1]}px`;
+    c.render();
+    c.div.classList.add("pile");
+    game.board.append(c.div);
+  }
   return p;
 };
 
@@ -49,5 +51,6 @@ game.suits.forEach(function(s, si) {
 });
 
 util.shuffle(game.cards);
-game.startPile(game.cards, [100,100]);
+game.deck = game.pile(game.cards, [100,100]);
+game.deck.render();
 
