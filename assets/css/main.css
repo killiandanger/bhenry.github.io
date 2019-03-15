@@ -28,6 +28,11 @@ body {
   margin: 0 auto;
   text-align: center;
   max-width:980px;
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
 }
 
 #game * {
@@ -62,6 +67,7 @@ body {
   opacity: 1;
   background-color: #eee;
   position: relative;
+  touch-action: none;
 }
 
 .cardback {
