@@ -41,7 +41,8 @@ body {
 
 #board {
   min-height: 400px;
-  overflow: auto;
+  overflow: hidden;
+  position: relative;
   background-color: #09752f;
 }
 
@@ -66,7 +67,7 @@ body {
   vertical-align: text-bottom;
   opacity: 1;
   background-color: #eee;
-  position: relative;
+  position: absolute;
   touch-action: none;
 }
 

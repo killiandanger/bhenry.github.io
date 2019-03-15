@@ -17,8 +17,22 @@ game.pile = function(cards, coords) {
     c.render();
     if (p.cards.length > 1){
       c.div.classList.add("pile");
+    } else {
+      c.div.classList.remove("pile");
     }
-    game.board.append(c.div);
+    $(c.div).draggable({
+      containment: "div#board",
+      stack: '#board .card',
+      start: function(e, ui) {
+        c.div.classList.remove("pile");
+        p.cards.shift();
+        p.render();
+        game.board.append(p.cards[0].div);
+      },
+      stop: function(e, ui) {
+        // p.location = [ui.position.top, ui.position.left];
+      }
+    }).css({position: 'absolute', top: p.location[0], left: p.location[1]});
   }
   return p;
 };
@@ -53,6 +67,8 @@ game.suits.forEach(function(s, si) {
 });
 
 util.shuffle(game.cards);
-game.deck = game.pile(game.cards, [100,100]);
+game.deck = game.pile(game.cards, [40,40]);
+//game.deck = game.pile([game.cards[0]], [100,100]);
 game.deck.render();
+game.board.append(game.deck.cards[0].div);
 
