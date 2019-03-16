@@ -26,13 +26,16 @@ game.pile = function(cards, coords) {
       start: function(e, ui) {
         c.div.classList.remove("pile");
         p.cards.shift();
-        p.render();
-        game.board.append(p.cards[0].div);
+        if (p.cards.length > 0){
+          p.render();
+        }
       },
       stop: function(e, ui) {
-        // p.location = [ui.position.top, ui.position.left];
+        let new_pile = game.pile([c],[c.div.style.top, c.div.style.left]);
+        new_pile.render();
       }
     }).css({position: 'absolute', top: p.location[0], left: p.location[1]});
+    game.board.append(p.cards[0].div);
   }
   return p;
 };
@@ -67,8 +70,6 @@ game.suits.forEach(function(s, si) {
 });
 
 util.shuffle(game.cards);
-game.deck = game.pile(game.cards, [40,40]);
-//game.deck = game.pile([game.cards[0]], [100,100]);
+game.deck = game.pile(game.cards.slice(0,5), [40,40]);
 game.deck.render();
-game.board.append(game.deck.cards[0].div);
 
