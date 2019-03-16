@@ -35,13 +35,12 @@ game.pile = function(cards, coords) {
     $(c.div).draggable({
       containment: "div#board",
       stack: "#board .card",
-      distance: 6,
+      distance: 4,
       start: function(e, ui) {
         console.log("start drag", c.identifier);
+        c.div.classList.remove("pile-0", "pile-13", "pile-26", "pile-39", "pile-52");
         p.cards.shift();
         p.render();
-        c.cards_below = 0;
-        c.render();
       },
       stop: function(e, ui) {
         console.log("stop drag", c.identifier);
