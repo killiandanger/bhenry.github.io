@@ -15,18 +15,17 @@ game.pile = function(cards, coords) {
     if (!c){
       return;
     }
+    c.cards_below = p.cards.length - 1;
+    console.log(p.cards.length);
     c.div.style.top = `${p.location[0]}px`;
     c.div.style.left = `${p.location[1]}px`;
     c.render();
-    if (p.cards.length > 1){
-      c.div.classList.add("pile");
-    } else {
-      c.div.classList.remove("pile");
-    }
+    console.log("binding stff");
     $(c.div).droppable({
       greedy: true,
       drop: function( event, ui ) {
         let new_card = ui.draggable.data("c");
+        new_card.cards_below = p.cards.length;
         console.log("dropping ", new_card.identifier, " onto ", c.identifier);
         p.cards.unshift(new_card);
         $(c.div).droppable('disable');
@@ -36,17 +35,19 @@ game.pile = function(cards, coords) {
     $(c.div).draggable({
       containment: "div#board",
       stack: "#board .card",
+      distance: 6,
       start: function(e, ui) {
         console.log("start drag", c.identifier);
-        c.div.classList.remove("pile");
         p.cards.shift();
         p.render();
+        c.cards_below = 0;
+        c.render();
       },
       stop: function(e, ui) {
         console.log("stop drag", c.identifier);
       }
     }).css({position: "absolute", top: p.location[0], left: p.location[1]});
-    game.board.append(p.cards[0].div);
+    game.board.append(c.div);
   }
   return p;
 };
@@ -54,6 +55,7 @@ game.pile = function(cards, coords) {
 $(game.board).droppable({
   drop: function(event,ui){
     let new_card = ui.draggable.data("c");
+    new_card.cards_below = 0;
     console.log("dropping ", new_card.identifier, " onto board");
     let new_pile = game.pile([new_card],[new_card.div.style.top, new_card.div.style.left]);
     new_pile.render();
@@ -70,19 +72,33 @@ game.suits.forEach(function(s, si) {
     card.facing_up = Math.random() < 0.5;
     card.div = document.createElement("div");
     $(card.div).data("c", card);
+    $(card.div).click(function(e){
+      e.preventDefault();
+      card.facing_up = !card.facing_up;
+      card.render();
+    });
     card.render = function() {
-      card.div.innerHTML = "";
+      if (card.cards_below < 1){
+        card.div.className = "pile-0";
+      } else if(card.cards_below < 13) {
+        card.div.className = "pile-13";
+      } else if(card.cards_below < 26) {
+        card.div.className = "pile-26";
+      } else if(card.cards_below < 39) {
+        card.div.className = "pile-39";
+      } else {
+        card.div.className = "pile-52";
+      }
       let inner = "";
-      let classes = "card";
       if (card.facing_up) {
+        card.div.classList.remove('cardback');
         inner = `<div class='rank'>${card.rank}</div><div class='suit'>${card.suit}</div>`;
       } else {
-        classes += " cardback";
+        card.div.classList.add('cardback');
         inner = `<div class='rank'>&nbsp;</div><div class='suit'>&nbsp;</div>`;
       }
-
-      card.div.className = classes;
       card.div.innerHTML = inner;
+      card.div.classList.add('card');
     }
 
     game.cards.unshift(card);
