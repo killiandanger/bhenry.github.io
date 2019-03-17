@@ -61,7 +61,7 @@ util.make_card = function(suit, si, rank, ri){
   card.identifier = `${ri}-${si}`;
   card.rank = rank;
   card.suit = suit;
-  card.facing_up = Math.random() < 0.5;
+  card.facing_up = false; //Math.random() < 0.5;
   card.div = document.createElement("div");
   $(card.div).data("c", card);
   $(card.div).mousedown(util.mousedown(card));
