@@ -23,16 +23,16 @@ window.addEventListener('touchstart', function onFirstTouch() {
 
 
 util.pile_class = function(cards_below){
-  if (card.cards_below < 1){
-    "pile-0";
-  } else if(card.cards_below < 13) {
-    "pile-13";
-  } else if(card.cards_below < 26) {
-    "pile-26";
-  } else if(card.cards_below < 39) {
-    "pile-39";
+  if (cards_below < 1){
+    return "pile-0";
+  } else if(cards_below < 13) {
+    return "pile-13";
+  } else if(cards_below < 26) {
+    return "pile-26";
+  } else if(cards_below < 39) {
+    return "pile-39";
   } else {
-    "pile-52";
+    return "pile-52";
   }
 };
 
