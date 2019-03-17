@@ -12,22 +12,22 @@ body {
                                   supported by Chrome and Opera */
 }
 
-.flair * {
-  margin:0 4px;
-  padding:0;
-  vertical-align: top;
-}
-
 .flair {
   text-align: center;
   margin: 24px 1px;
   vertical-align: center;
 }
 
+.flair * {
+  margin: 0 4px;
+  padding: 0;
+  vertical-align: top;
+}
+
 #game {
   margin: 0 auto;
   text-align: center;
-  max-width:980px;
+  max-width: 980px;
   width: 90%;
   align-items: center;
   justify-content: center;
