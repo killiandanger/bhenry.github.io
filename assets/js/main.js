@@ -58,7 +58,7 @@ $(game.board).droppable({
     let new_pile = game.pile([new_card],[new_card.div.style.top, new_card.div.style.left]);
     new_pile.render();
   }
-});
+}).resizable({handles: {s: '.resizer'}});
 
 game.cards = []
 game.suits.forEach(function(s, si){

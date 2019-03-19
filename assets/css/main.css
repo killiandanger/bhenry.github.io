@@ -46,6 +46,14 @@ body {
   background-color: #09752f;
 }
 
+#board .resizer {
+  width: 100%;
+  margin-bottom: 16px;
+  position: absolute;
+  bottom: 0px;
+  text-align:center;
+}
+
 #hand {
   min-height: 100px;
 }
@@ -56,6 +64,7 @@ body {
 
 .card {
   margin: 2px;
+  margin-bottom: 20px;
   width: 69px;
   height: 100px;
   cursor: pointer;
