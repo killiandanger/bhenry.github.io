@@ -66,6 +66,7 @@ html, body {
   text-align: center;
   height: 80%;
   width: 90%;
+  max-width: 800px;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -75,10 +76,12 @@ html, body {
 }
 
 #board {
-  height: 400px;
-  min-height: 200px;
+  min-height: 240px;
   position: relative;
   background-color: #1b7b34;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 
 #board .resizer, #hand .resizer {
@@ -93,6 +96,9 @@ html, body {
   min-height: 120px;
   margin-bottom: 12px;
   background-color: #d5d5d5;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .red {
