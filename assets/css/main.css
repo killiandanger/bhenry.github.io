@@ -80,7 +80,7 @@ html, body {
   background-color: #1b7b34;
 }
 
-#board .resizer {
+#board .resizer, #hand .resizer {
   width: 100%;
   margin-bottom: 16px;
   position: absolute;
