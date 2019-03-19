@@ -31,7 +31,7 @@ game.pile = function(cards, coords){
       }
     }).droppable('enable');
     $(c.div).draggable({
-      containment: "div#board",
+      containment: "div#game",
       stack: "#board .card",
       distance: 6,
       start: function(e, ui){
@@ -55,6 +55,16 @@ $(game.board).droppable({
     let new_card = ui.draggable.data("c");
     new_card.cards_below = 0;
     console.log("dropping", new_card.identifier, "onto board");
+    let new_pile = game.pile([new_card],[new_card.div.style.top, new_card.div.style.left]);
+    new_pile.render();
+  }
+}).resizable({handles: {s: '.resizer'}});
+
+$(game.hand).droppable({
+  drop: function(event,ui){
+    let new_card = ui.draggable.data("c");
+    new_card.cards_below = 0;
+    console.log("dropping", new_card.identifier, "onto hand");
     let new_pile = game.pile([new_card],[new_card.div.style.top, new_card.div.style.left]);
     new_pile.render();
   }
