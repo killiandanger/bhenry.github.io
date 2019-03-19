@@ -29,12 +29,12 @@ game.pile = function(cards, coords){
     }).droppable('enable');
     $(c.div).draggable({
       containment: "div#game",
-      stack: "#board .card",
+      stack: "#game .card",
       distance: 6,
       start: function(e, ui){
         console.log("start drag", c.identifier);
         $(c.div).off('mouseup');
-        c.div.classList.remove("pile-0", "pile-13", "pile-26", "pile-39", "pile-52");
+        c.div.classList.remove("pile-13", "pile-26", "pile-39", "pile-52");
         p.cards.shift();
         p.render();
       },
@@ -42,8 +42,8 @@ game.pile = function(cards, coords){
         console.log("stop drag", c.identifier);
       }
     }).css({position: "absolute", top: p.location[0], left: p.location[1]});
-    game.board.append(c.div);
-    game.board.append(c.div);
+
+    game.game.append(c.div);
   }
   return p;
 };
@@ -69,6 +69,6 @@ $(game.hand).droppable({
 }).resizable({handles: {s: '.resizer'}});
 
 util.shuffle(util.deck);
-game.deck = game.pile(util.deck, [40,40]);
+game.deck = game.pile(util.deck, [0,0]);
 //game.deck = game.pile(util.deck.slice(0,5), [40,40]);
 game.deck.render();

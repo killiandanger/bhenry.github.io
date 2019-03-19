@@ -71,6 +71,7 @@ html, body {
   overflow: hidden;
   touch-action: none;
   padding-bottom: 44px;
+  position: relative;
 }
 
 #board {
@@ -82,7 +83,7 @@ html, body {
 
 #board .resizer, #hand .resizer {
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   position: absolute;
   bottom: 0px;
   text-align: center;
@@ -100,7 +101,7 @@ html, body {
 
 .card {
   margin: 2px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   width: 69px;
   height: 100px;
   cursor: pointer;
