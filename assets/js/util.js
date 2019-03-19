@@ -1,8 +1,8 @@
-function util () {}
+let util = {};
 
 
 util.shuffle = function (array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+  let currentIndex = array.length, temporaryValue, randomIndex;
   while (0 !== currentIndex) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
@@ -39,7 +39,7 @@ util.pile_class = function(cards_below){
 
 util.mousedown = function(c){
   return function(e){
-    var data = {}
+    let data = {}
     data.startclick = Date.now();
     console.log(data.startclick);
     $(c.div).mouseup(util.mouseup(c, data));
@@ -87,3 +87,14 @@ util.make_card = function(suit, si, rank, ri){
   }
   return card;
 };
+
+util.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠'];
+util.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
+util.deck = []
+util.suits.forEach(function(s, si){
+  util.ranks.forEach(function(r, ri){
+    let card = util.make_card(s, si, r, ri);
+    util.deck.unshift(card);
+  });
+});
+

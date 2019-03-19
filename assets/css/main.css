@@ -75,6 +75,7 @@ html, body {
 
 #board {
   height: 400px;
+  min-height: 200px;
   position: relative;
   background-color: #1b7b34;
 }

@@ -1,10 +1,7 @@
 let game = {};
-
+game.game = document.getElementById("game");
 game.board = document.getElementById("board");
 game.hand = document.getElementById("hand");
-
-game.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠'];
-game.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
 
 game.pile = function(cards, coords){
   let p = {};
@@ -46,6 +43,7 @@ game.pile = function(cards, coords){
       }
     }).css({position: "absolute", top: p.location[0], left: p.location[1]});
     game.board.append(c.div);
+    game.board.append(c.div);
   }
   return p;
 };
@@ -70,15 +68,7 @@ $(game.hand).droppable({
   }
 }).resizable({handles: {s: '.resizer'}});
 
-game.cards = []
-game.suits.forEach(function(s, si){
-  game.ranks.forEach(function(r, ri){
-    card = util.make_card(s, si, r, ri);
-    game.cards.unshift(card);
-  });
-});
-
-// game.deck = game.pile(game.cards.slice(0,5), [40,40]);
-util.shuffle(game.cards);
-game.deck = game.pile(game.cards, [40,40]);
+util.shuffle(util.deck);
+game.deck = game.pile(util.deck, [40,40]);
+//game.deck = game.pile(util.deck.slice(0,5), [40,40]);
 game.deck.render();
