@@ -2,9 +2,10 @@ let game = {};
 game.game = document.getElementById("game");
 game.board = document.getElementById("board");
 game.hand = document.getElementById("hand");
-
+game.piles = [];
 game.pile = function(cards, coords){
   let p = {};
+  game.piles.push(p);
   p.cards = cards;
   p.location = coords;
   p.render = function(){
@@ -40,6 +41,7 @@ game.pile = function(cards, coords){
       },
       stop: function(e, ui){
         console.log("stop drag", c.identifier);
+        store.save(game);
       }
     }).css({position: "absolute", top: p.location[0], left: p.location[1]});
 
@@ -69,8 +71,10 @@ $(game.hand).droppable({
 }).resizable({handles: {s: '.resizer'}});
 
 game.start = function(uid){
+  game.uid = uid;
   util.shuffle(util.deck);
   //game.deck = game.pile(util.deck, [0,0]);
   game.deck = game.pile(util.deck.slice(0,5), [40,40]);
   game.deck.render();
+  store.save(game);
 };
