@@ -76,8 +76,8 @@ game.start = function(uid){
 
   game.uid = uid;
   util.shuffle(util.deck);
-  //game.deck = game.pile(util.deck, [0,0]);
-  game.deck = game.pile(util.deck.slice(0,5), [40,40]);
+  game.deck = game.pile(util.deck, [0,0]);
+  //game.deck = game.pile(util.deck.slice(0,5), [40,40]);
   game.deck.render();
   store.save(game);
 };
