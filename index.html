@@ -26,29 +26,6 @@
 	<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
 
-	<script>
-		firebase.auth().signInAnonymously().catch(function(error) {
-		  // Handle Errors here.
-		  var errorCode = error.code;
-		  var errorMessage = error.message;
-		  console.log(errorMessage);
-		  console.log(errorCode);
-		});
-
-		firebase.auth().onAuthStateChanged(function(user) {
-		  if (user) {
-		    // User is signed in.
-		    var isAnonymous = user.isAnonymous;
-		    var uid = user.uid;
-		    console.log(uid);
-		  } else {
-		    // User is signed out.
-		    // ...
-		  }
-		  // ...
-		});
-	</script>
-
 	<!--[if lt IE 9]>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -96,5 +73,25 @@
 <script src="assets/js/util.js"></script>
 <script src="assets/js/store.js"></script>
 <script src="assets/js/main.js"></script>
+
+<script>
+	firebase.auth().signInAnonymously().catch(function(error) {
+	  var errorCode = error.code;
+	  var errorMessage = error.message;
+	  console.log(errorMessage);
+	  console.log(errorCode);
+	});
+
+	firebase.auth().onAuthStateChanged(function(user) {
+	  if (user) {
+	    var isAnonymous = user.isAnonymous;
+	    var uid = user.uid;
+	    game.start(uid);
+	    console.log(uid);
+	  } else {
+	    // User is signed out.
+	  }
+	});
+</script>
 </body>
 </html>
