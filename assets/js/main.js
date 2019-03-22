@@ -2,17 +2,18 @@ let game = {};
 game.game = document.getElementById("game");
 game.board = document.getElementById("board");
 game.hand = document.getElementById("hand");
-game.piles = [];
+game.piles = {};
 game.pile = function(cards, coords){
   let p = {};
-  game.piles.push(p);
   p.cards = cards;
   p.location = coords;
+
   p.render = function(){
     let c = p.cards[0];
     if (!c){
       return;
     }
+    game.piles[p.cards[0].identifier] = p;
     c.cards_below = p.cards.length - 1;
     c.div.style.top = `${p.location[0]}px`;
     c.div.style.left = `${p.location[1]}px`;
@@ -20,10 +21,11 @@ game.pile = function(cards, coords){
     $(c.div).droppable({
       greedy: true,
       drop: function(event, ui){
-        let new_card = ui.draggable.data("c");
-        new_card.cards_below = p.cards.length;
-        console.log("dropping", new_card.identifier, "onto", c.identifier);
-        p.cards.unshift(new_card);
+        let dragging_card = ui.draggable.data("c");
+        dragging_card.cards_below = p.cards.length;
+        console.log("dropping", dragging_card.identifier, "onto", c.identifier);
+        delete game.piles[c.identifier];
+        p.cards.unshift(dragging_card);
         $(c.div).droppable('disable');
         p.render();
       }
@@ -41,10 +43,9 @@ game.pile = function(cards, coords){
       },
       stop: function(e, ui){
         console.log("stop drag", c.identifier);
-        store.save(game);
       }
     }).css({position: "absolute", top: p.location[0], left: p.location[1]});
-
+    store.save(game)
     game.game.append(c.div);
   }
   return p;
@@ -66,11 +67,13 @@ $(game.hand).droppable({
     new_card.cards_below = 0;
     console.log("dropping", new_card.identifier, "onto hand");
     let new_pile = game.pile([new_card],[new_card.div.style.top, new_card.div.style.left]);
+    new_pile.in_hand = true;
     new_pile.render();
   }
 }).resizable({handles: {s: '.resizer'}});
 
 game.start = function(uid){
+
   game.uid = uid;
   util.shuffle(util.deck);
   //game.deck = game.pile(util.deck, [0,0]);

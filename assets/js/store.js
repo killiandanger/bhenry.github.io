@@ -11,26 +11,27 @@ store.put = function(k, v){
 store.card = function(card){
   let ri, si = card.identifier.split("-").map(Number);
   return {
-    rank_index: card.rank,
-    suit: card.suit
-
+    rank_index: ri,
+    suit_index: si,
+    facing_up: !!card.facing_up
   };
 };
 
 store.pile = function(pile){
   return {
     location: pile.location,
-    in_hand: pile.in_hand,
+    in_hand: !!pile.in_hand,
     cards: pile.cards.map(c => store.card(c))
   };
 };
 
 store.game = function(game){
   return {
-    piles: game.piles.filter(p => p.cards.length).map(p => store.pile(p))
+    piles: Object.values(game.piles).filter(p => p.cards.length).map(p => store.pile(p))
   };
 };
 
 store.save = function(game){
+  console.log("saving", store.game(game));
   store.put(game.uid, store.game(game));
 };
