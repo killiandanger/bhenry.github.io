@@ -18,6 +18,8 @@ game.pile = function(cards, coords){
     c.div.style.top = `${p.location[0]}px`;
     c.div.style.left = `${p.location[1]}px`;
     c.render();
+    $(c.div).off('mousedown');
+    $(c.div).mousedown(util.mousedown(c, game.save));
     $(c.div).droppable({
       greedy: true,
       drop: function(event, ui){
@@ -45,7 +47,7 @@ game.pile = function(cards, coords){
         console.log("stop drag", c.identifier);
       }
     }).css({position: "absolute", top: p.location[0], left: p.location[1]});
-    store.save(game)
+    game.save();
     game.game.append(c.div);
   }
   return p;
@@ -72,12 +74,23 @@ $(game.hand).droppable({
   }
 }).resizable({handles: {s: '.resizer'}});
 
-game.start = function(uid){
-
-  game.uid = uid;
-  util.shuffle(util.deck);
-  game.deck = game.pile(util.deck, [0,0]);
-  //game.deck = game.pile(util.deck.slice(0,5), [40,40]);
-  game.deck.render();
+game.save = function(){
   store.save(game);
+};
+
+game.start = function(uid){
+  game.uid = uid;
+  if (game.uid){
+    //read state
+    let data = store.load(game);
+    data.piles.forEach(function(p){
+      let cards = p.cards.map(c => util.make_card(c));
+      game.pile(cards, p.location).render();
+    });
+  } else {
+    let deck = util.make_deck();
+    game.deck = game.pile(util.shuffle(deck), [0,0]);
+    //game.deck = game.pile(util.deck.slice(0,5), [40,40]);
+    game.deck.render();
+  }
 };

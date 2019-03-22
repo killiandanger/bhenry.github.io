@@ -9,10 +9,11 @@ store.put = function(k, v){
 };
 
 store.card = function(card){
-  let ri, si = card.identifier.split("-").map(Number);
+  let [ri, si] = card.identifier.split("-").map(Number);
   return {
     rank_index: ri,
     suit_index: si,
+    cards_below: card.cards_below,
     facing_up: !!card.facing_up
   };
 };
@@ -34,4 +35,8 @@ store.game = function(game){
 store.save = function(game){
   console.log("saving", store.game(game));
   store.put(game.uid, store.game(game));
+};
+
+store.load = function(game){
+  return store.get(game.uid);
 };

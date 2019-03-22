@@ -1,7 +1,8 @@
 let util = {};
 
 
-util.shuffle = function (array) {
+util.shuffle = function (arr) {
+  let array = arr.slice(0, arr.length+1);
   let currentIndex = array.length, temporaryValue, randomIndex;
   while (0 !== currentIndex) {
     randomIndex = Math.floor(Math.random() * currentIndex);
@@ -37,21 +38,20 @@ util.pile_class = function(cards_below){
 };
 
 
-util.mousedown = function(c){
+util.mousedown = function(c, onSuccess){
   return function(e){
     let data = {}
     data.startclick = Date.now();
-    console.log(data.startclick);
-    $(c.div).mouseup(util.mouseup(c, data));
+    $(c.div).mouseup(util.mouseup(c, data, onSuccess));
   }
 }
 
-util.mouseup = function(c, data){
+util.mouseup = function(c, data, onSuccess){
   return function(e){
     $(c.div).off('mouseup');
-    console.log(Date.now() - data.startclick);
     if (Date.now() - data.startclick < 200){
       c.flipcard();
+      onSuccess();
     }
   }
 }
@@ -59,15 +59,17 @@ util.mouseup = function(c, data){
 util.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠'];
 util.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
 
-util.make_card = function(si, ri){
+util.make_card = function(attrs){
   let card = {};
+  let ri = attrs.rank_index;
+  let si = attrs.suit_index;
   card.identifier = `${ri}-${si}`;
   card.rank = util.ranks[ri];
   card.suit = util.suits[si];
-  card.facing_up = false; //Math.random() < 0.5;
+  card.facing_up = attrs.facing_up;
+  card.cards_below = attrs.cards_below;
   card.div = document.createElement("div");
   $(card.div).data("c", card);
-  $(card.div).mousedown(util.mousedown(card));
   card.render = function() {
     card.div.className = util.pile_class(card.cards_below)
     let inner = "";
@@ -91,11 +93,13 @@ util.make_card = function(si, ri){
   return card;
 };
 
-util.deck = []
-util.suits.forEach(function(s, si){
-  util.ranks.forEach(function(r, ri){
-    let card = util.make_card(si, ri);
-    util.deck.unshift(card);
+util.make_deck = function(){
+  let deck = []
+  util.suits.forEach(function(s, si){
+    util.ranks.forEach(function(r, ri){
+      let card = util.make_card(si, ri);
+      deck.unshift(card);
+    });
   });
-});
-
+  return deck;
+};
