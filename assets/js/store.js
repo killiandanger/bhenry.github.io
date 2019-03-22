@@ -36,7 +36,3 @@ store.save = function(game){
   console.log("saving", store.game(game));
   store.put(game.uid, store.game(game));
 };
-
-store.load = function(game){
-  return store.get(game.uid);
-};

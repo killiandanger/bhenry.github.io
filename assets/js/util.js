@@ -38,20 +38,19 @@ util.pile_class = function(cards_below){
 };
 
 
-util.mousedown = function(c, onSuccess){
+util.mousedown = function(c){
   return function(e){
     let data = {}
     data.startclick = Date.now();
-    $(c.div).mouseup(util.mouseup(c, data, onSuccess));
+    $(c.div).mouseup(util.mouseup(c, data));
   }
 }
 
-util.mouseup = function(c, data, onSuccess){
+util.mouseup = function(c, data){
   return function(e){
     $(c.div).off('mouseup');
     if (Date.now() - data.startclick < 200){
       c.flipcard();
-      onSuccess();
     }
   }
 }
@@ -59,7 +58,7 @@ util.mouseup = function(c, data, onSuccess){
 util.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠'];
 util.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
 
-util.make_card = function(attrs){
+util.make_card = function(save, attrs){
   let card = {};
   let ri = attrs.rank_index;
   let si = attrs.suit_index;
@@ -70,6 +69,7 @@ util.make_card = function(attrs){
   card.cards_below = attrs.cards_below;
   card.div = document.createElement("div");
   $(card.div).data("c", card);
+  $(card.div).mousedown(util.mousedown(card));
   card.render = function() {
     card.div.className = util.pile_class(card.cards_below)
     let inner = "";
@@ -88,16 +88,21 @@ util.make_card = function(attrs){
   }
   card.flipcard = function(){
     card.facing_up = !card.facing_up;
+    save();
     card.render();
   }
   return card;
 };
 
-util.make_deck = function(){
+util.make_deck = function(save){
   let deck = []
   util.suits.forEach(function(s, si){
     util.ranks.forEach(function(r, ri){
-      let card = util.make_card(si, ri);
+      let card = util.make_card(save, {
+        suit_index: si,
+        rank_index: ri,
+        cards_below: deck.length
+      });
       deck.unshift(card);
     });
   });
