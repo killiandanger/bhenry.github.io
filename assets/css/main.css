@@ -71,7 +71,6 @@ html, body {
   justify-content: center;
   overflow: hidden;
   touch-action: none;
-  padding-bottom: 44px;
   position: relative;
 }
 
@@ -99,6 +98,24 @@ html, body {
   border-bottom: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
+}
+
+#controls {
+  padding-bottom: 44px;
+}
+
+#controls {
+  text-align: center;
+  padding: 24px 1px;
+  vertical-align: center;
+}
+
+#controls i {
+  cursor: pointer;
+}
+
+#controls i:hover {
+  color: #555;
 }
 
 .red {

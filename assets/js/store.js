@@ -33,6 +33,5 @@ store.game = function(game){
 };
 
 store.save = function(game){
-  console.log("saving", store.game(game));
   store.put(game.uid, store.game(game));
 };

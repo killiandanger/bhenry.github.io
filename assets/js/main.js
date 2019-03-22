@@ -69,6 +69,14 @@ game.save = function(){
   store.save(game);
 };
 
+game.reset = function(){
+  //pass game.save function so cards can save their state.
+  let deck = util.make_deck(game.save);
+  game.deck = game.pile(util.shuffle(deck), [0,0]);
+  //game.deck = game.pile(util.deck.slice(0,5), [40,40]);
+  game.deck.render();
+};
+
 game.start = function(uid){
   game.uid = uid;
   let data = store.get(game.uid);
@@ -78,9 +86,6 @@ game.start = function(uid){
       game.pile(cards, p.location).render();
     });
   } else {
-    let deck = util.make_deck(game.save);
-    game.deck = game.pile(util.shuffle(deck), [0,0]);
-    //game.deck = game.pile(util.deck.slice(0,5), [40,40]);
-    game.deck.render();
+    game.reset();
   }
 };
