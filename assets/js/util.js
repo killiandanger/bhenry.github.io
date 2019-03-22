@@ -56,11 +56,14 @@ util.mouseup = function(c, data){
   }
 }
 
-util.make_card = function(suit, si, rank, ri){
+util.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠'];
+util.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
+
+util.make_card = function(si, ri){
   let card = {};
   card.identifier = `${ri}-${si}`;
-  card.rank = rank;
-  card.suit = suit;
+  card.rank = util.ranks[ri];
+  card.suit = util.suits[si];
   card.facing_up = false; //Math.random() < 0.5;
   card.div = document.createElement("div");
   $(card.div).data("c", card);
@@ -88,12 +91,10 @@ util.make_card = function(suit, si, rank, ri){
   return card;
 };
 
-util.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠'];
-util.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
 util.deck = []
 util.suits.forEach(function(s, si){
   util.ranks.forEach(function(r, ri){
-    let card = util.make_card(s, si, r, ri);
+    let card = util.make_card(si, ri);
     util.deck.unshift(card);
   });
 });
