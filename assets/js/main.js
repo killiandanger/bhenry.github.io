@@ -82,24 +82,35 @@ game.save = function(){
   store.save(game);
 };
 
+game.set = function(data){
+  game.state.board_height = data.state.board_height;
+  game.state.hand_height = data.state.hand_height;
+  $(game.board).css({height: data.state.board_height});
+  $(game.hand).css({height: data.state.hand_height});
+  data.piles.forEach(function(p){
+    let cards = p.cards.map(c => util.make_card(game.save, c));
+    game.pile(cards, p.location).render();
+  });
+};
+
 game.reset = function(){
-  //pass game.save function so cards can save their state.
-  let d = util.make_deck(game.save);
-  game.pile(util.shuffle(d), [0,0]).render();
+  Object.values(game.piles).map(function(p){
+    p.cards.map(function(c){
+      $(c.div).remove();
+    });
+  });
+  game.piles = {};
+  let d = util.shuffle(util.make_deck(game.save));
+  let p = game.pile(util.shuffle(d.slice(48)), [0,0]);
+  game.piles[p.cards[0].identifier] = p;
+  game.set(store.game(game));
 };
 
 game.start = function(uid){
   game.uid = uid;
   let data = store.get(game.uid);
   if (data){
-    game.state.board_height = data.state.board_height;
-    game.state.hand_height = data.state.hand_height;
-    $(game.board).css({height: data.state.board_height});
-    $(game.hand).css({height: data.state.hand_height});
-    data.piles.forEach(function(p){
-      let cards = p.cards.map(c => util.make_card(game.save, c));
-      game.pile(cards, p.location).render();
-    });
+    game.set(data);
   } else {
     game.reset();
   }
