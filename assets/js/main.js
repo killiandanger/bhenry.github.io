@@ -84,10 +84,8 @@ game.save = function(){
 
 game.reset = function(){
   //pass game.save function so cards can save their state.
-  let deck = util.make_deck(game.save);
-  game.deck = game.pile(util.shuffle(deck), [0,0]);
-  //game.deck = game.pile(util.deck.slice(0,5), [40,40]);
-  game.deck.render();
+  let d = util.make_deck(game.save);
+  game.pile(util.shuffle(d), [0,0]).render();
 };
 
 game.start = function(uid){
@@ -102,7 +100,6 @@ game.start = function(uid){
       let cards = p.cards.map(c => util.make_card(game.save, c));
       game.pile(cards, p.location).render();
     });
-
   } else {
     game.reset();
   }
