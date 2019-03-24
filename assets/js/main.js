@@ -101,7 +101,7 @@ game.reset = function(){
   });
   game.piles = {};
   let d = util.shuffle(util.make_deck(game.save));
-  let p = game.pile(util.shuffle(d, [0,0]);
+  let p = game.pile(util.shuffle(d), [0,0]);
   game.piles[p.cards[0].identifier] = p;
   game.set(store.game(game));
 };
