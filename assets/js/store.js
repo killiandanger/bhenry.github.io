@@ -28,6 +28,10 @@ store.pile = function(pile){
 
 store.game = function(game){
   return {
+    state: {
+      board_height: game.state.board_height,
+      hand_height: game.state.hand_height
+    },
     piles: Object.values(game.piles).filter(p => p.cards.length).map(p => store.pile(p))
   };
 };

@@ -1,4 +1,5 @@
 let game = {};
+game.state = {};
 game.game = document.getElementById("game");
 game.board = document.getElementById("board");
 game.hand = document.getElementById("hand");
@@ -53,7 +54,13 @@ $(game.board).droppable({
     let new_pile = game.pile([new_card],[new_card.div.style.top, new_card.div.style.left]);
     new_pile.render();
   }
-}).resizable({handles: {s: '.resizer'}});
+}).resizable({
+  handles: {s: '.resizer'},
+  stop: function(e, ui){
+    game.state.board_height = $(game.board).height();
+    game.save();
+  }
+});
 
 $(game.hand).droppable({
   drop: function(event,ui){
@@ -63,7 +70,13 @@ $(game.hand).droppable({
     new_pile.in_hand = true;
     new_pile.render();
   }
-}).resizable({handles: {s: '.resizer'}});
+}).resizable({
+  handles: {s: '.resizer'},
+  stop: function(e, ui){
+    game.state.hand_height = $(game.hand).height();
+    game.save();
+  }
+}).css({height: game.state.board_height});
 
 game.save = function(){
   store.save(game);
@@ -81,10 +94,15 @@ game.start = function(uid){
   game.uid = uid;
   let data = store.get(game.uid);
   if (data){
+    game.state.board_height = data.state.board_height;
+    game.state.hand_height = data.state.hand_height;
+    $(game.board).css({height: data.state.board_height});
+    $(game.hand).css({height: data.state.hand_height});
     data.piles.forEach(function(p){
       let cards = p.cards.map(c => util.make_card(game.save, c));
       game.pile(cards, p.location).render();
     });
+
   } else {
     game.reset();
   }
