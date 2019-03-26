@@ -43,17 +43,21 @@ util.mousedown = function(c){
     let data = {}
     data.startclick = Date.now();
     $(c.div).mouseup(util.mouseup(c, data));
-  }
-}
+    util.menuTimer = setTimeout(function(){
+      console.log("popup");
+    }, 888);
+  };
+};
 
 util.mouseup = function(c, data){
   return function(e){
+    clearTimeout(util.menuTimer);
     $(c.div).off('mouseup');
     if (Date.now() - data.startclick < 400){
       c.flipcard();
     }
-  }
-}
+  };
+};
 
 util.suits = ["<span class='red'>♥</span>", '♣', "<span class='red'>♦</span>", '♠'];
 util.ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
