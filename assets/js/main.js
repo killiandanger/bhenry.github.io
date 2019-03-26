@@ -36,6 +36,7 @@ game.pile = function(cards, coords){
       stack: "#game .card",
       distance: 6,
       start: function(e, ui){
+        clearTimeout(util.menuTimer);
         $(c.div).off('mouseup');
         c.div.classList.remove("pile-13", "pile-26", "pile-39", "pile-52");
         p.cards.shift();
