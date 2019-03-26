@@ -49,7 +49,7 @@ util.mousedown = function(c){
 util.mouseup = function(c, data){
   return function(e){
     $(c.div).off('mouseup');
-    if (Date.now() - data.startclick < 200){
+    if (Date.now() - data.startclick < 400){
       c.flipcard();
     }
   }

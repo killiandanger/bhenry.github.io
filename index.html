@@ -88,15 +88,13 @@
 
 	firebase.auth().onAuthStateChanged(function(user) {
 	  if (user) {
-	    var isAnonymous = user.isAnonymous;
-	    var uid = user.uid;
-	    console.log(uid);
-	    game.start(uid);
-	  } else {
-	    // if you can't hit firebase something is broke
-	    console.log("sorry you will not be able to play. try refreshing.");
+	    game.isAnonymous = user.isAnonymous;
+	    game.uid = user.uid;
 	  }
+		console.log(game.uid);
 	});
+
+  game.start();
 </script>
 </body>
 </html>

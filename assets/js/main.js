@@ -106,8 +106,7 @@ game.reset = function(){
   game.set(store.game(game));
 };
 
-game.start = function(uid){
-  game.uid = uid;
+game.start = function(){
   let data = store.get(game.uid);
   if (data){
     game.set(data);
