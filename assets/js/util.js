@@ -38,14 +38,27 @@ util.pile_class = function(cards_below){
 };
 
 
+util.popup = function(c){
+  // util.menu.easyModal({
+  //   left: $(c.div).position.left,
+  //   top: $(c.div).position.top,
+  //   overlayParent: "#game",
+  //   onClose: function(menu){
+  //     menu.remove();
+  //   }
+  // });
+  // util.menu.trigger('openModal');
+  console.log("make popup");
+};
+
 util.mousedown = function(c){
   return function(e){
     let data = {}
     data.startclick = Date.now();
     $(c.div).mouseup(util.mouseup(c, data));
     util.menuTimer = setTimeout(function(){
-      console.log("popup");
-    }, 888);
+      util.popup(c);
+    }, 900);
   };
 };
 
