@@ -1,5 +1,11 @@
 let util = {};
 
+util.tracker = function(e){
+  util.mouseX = e.pageX;
+  util.mouseY = e.pageY;
+};
+
+window.addEventListener("mousemove", util.tracker);
 
 util.shuffle = function (arr) {
   let array = arr.slice(0, arr.length+1);
@@ -14,14 +20,12 @@ util.shuffle = function (arr) {
   return array;
 };
 
-
 util.touchDevice = false;
 window.addEventListener('touchstart', function onFirstTouch() {
   document.body.classList.add('touch-device');
   util.touchDevice = true;
   window.removeEventListener('touchstart', onFirstTouch, false);
 }, false);
-
 
 util.pile_class = function(cards_below){
   if (cards_below < 1){
@@ -37,17 +41,16 @@ util.pile_class = function(cards_below){
   }
 };
 
+util.menu = document.createElement("div")
+util.menu.innerHTML = "HELLO";
+$(util.menu).easyModal({
+  overlayParent: "body"
+});
 
 util.popup = function(c){
-  // util.menu.easyModal({
-  //   left: $(c.div).position.left,
-  //   top: $(c.div).position.top,
-  //   overlayParent: "#game",
-  //   onClose: function(menu){
-  //     menu.remove();
-  //   }
-  // });
-  // util.menu.trigger('openModal');
+  util.menu.style.left = util.pageX + "px";
+  util.menu.style.top = util.pageY + "px";
+  $(util.menu).trigger("openModal");
   console.log("make popup");
 };
 

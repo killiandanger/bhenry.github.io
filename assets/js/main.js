@@ -105,6 +105,7 @@ game.reset = function(){
   let p = game.pile(util.shuffle(d), [0,0]);
   game.piles[p.cards[0].identifier] = p;
   game.set(store.game(game));
+  $("body").append(util.menu);
 };
 
 game.start = function(){
