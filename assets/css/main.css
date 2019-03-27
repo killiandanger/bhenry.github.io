@@ -146,6 +146,20 @@ html, body {
   background-repeat: no-repeat;
 }
 
+.card-menu {
+  width: 50px;
+  z-index: 999999;
+  display: none;
+  position: fixed;
+  background-color: #c0c0c0;
+  border: 1px solid #232342;
+}
+
+.menu-item {
+  cursor: pointer;
+  margin: 14px;
+}
+
 .pile-0 {
   box-shadow: 0px 0px 0px #111;
 }

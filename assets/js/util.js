@@ -43,9 +43,7 @@ util.pile_class = function(cards_below){
 
 util.menu = {};
 util.menu.div = document.createElement("div");
-util.menu.div.style.display = "none";
-util.menu.div.style.position = "fixed";
-util.menu.div.style.zIndex = "999999";
+util.menu.div.classList.add("card-menu");
 util.menu.hide = function(){
   while (util.menu.div.lastChild) {
     util.menu.div.removeChild(util.menu.div.lastChild);
@@ -59,7 +57,7 @@ util.menu.show = function(c){
 util.menu.flip_button = function(c){
   let div = document.createElement("div");
   div.innerHTML = "flip";
-  div.classList.add("menuItem");
+  div.classList.add("menu-item");
   div.addEventListener("click", function(e){
     c.flipcard();
     util.menu.hide();
