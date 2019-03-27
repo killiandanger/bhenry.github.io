@@ -64,13 +64,20 @@ util.menu.flip_button = function(c){
   });
   util.menu.div.append(div);
 };
-
+util.menu.canceler = function(e){
+  if (!event.target.classList.contains('card-menu') &&
+      !event.target.classList.contains('menu-item')) {
+    util.menu.hide();
+    return;
+  }
+};
+window.addEventListener('mousedown', util.menu.canceler);
+window.addEventListener('mouseup', util.menu.canceler);
 document.querySelector("#game").append(util.menu.div);
 
 util.popup = function(c){
-  console.log([util.mouseX, util.mouseY])
-  util.menu.div.style.left = util.mouseX + "px";
-  util.menu.div.style.top = util.mouseY + "px";
+  util.menu.div.style.left = util.mouseX - 8 + "px";
+  util.menu.div.style.top = util.mouseY - 8 + "px";
   util.menu.show(c);
 };
 
