@@ -41,17 +41,39 @@ util.pile_class = function(cards_below){
   }
 };
 
-util.menu = document.createElement("div")
-util.menu.innerHTML = "HELLO";
-$(util.menu).easyModal({
-  overlayParent: "body"
-});
+util.menu = {};
+util.menu.div = document.createElement("div");
+util.menu.div.style.display = "none";
+util.menu.div.style.position = "fixed";
+util.menu.div.style.zIndex = "999999";
+util.menu.hide = function(){
+  while (util.menu.div.lastChild) {
+    util.menu.div.removeChild(util.menu.div.lastChild);
+  }
+  util.menu.div.style.display = "none";
+};
+util.menu.show = function(c){
+  util.menu.div.style.display = "block";
+  util.menu.flip_button(c);
+};
+util.menu.flip_button = function(c){
+  let div = document.createElement("div");
+  div.innerHTML = "flip";
+  div.classList.add("menuItem");
+  div.addEventListener("click", function(e){
+    c.flipcard();
+    util.menu.hide();
+  });
+  util.menu.div.append(div);
+};
+
+document.querySelector("#game").append(util.menu.div);
 
 util.popup = function(c){
-  util.menu.style.left = util.pageX + "px";
-  util.menu.style.top = util.pageY + "px";
-  $(util.menu).trigger("openModal");
-  console.log("make popup");
+  console.log([util.mouseX, util.mouseY])
+  util.menu.div.style.left = util.mouseX + "px";
+  util.menu.div.style.top = util.mouseY + "px";
+  util.menu.show(c);
 };
 
 util.mousedown = function(c){
